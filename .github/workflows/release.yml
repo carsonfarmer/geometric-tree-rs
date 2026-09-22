@@ -1,0 +1,25 @@
+# Publishes to crates.io when a tag like v1.2.3 is pushed and matches
+# Cargo.toml. Authenticates with crates.io trusted publishing (OIDC): no token
+# or secret is involved. The crate's settings on crates.io must list this
+# repository and this workflow file as a trusted publisher.
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test --release
+      - name: Check that the tag matches Cargo.toml
+        run: test "v$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')" = "${GITHUB_REF_NAME}"
+      - uses: rust-lang/crates-io-auth-action@v1
+        id: auth
+      - run: cargo publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
