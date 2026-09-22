@@ -1,0 +1,12 @@
+[package]
+name = "geometric-tree"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Immutable, history-independent maps, sets and lists built on geometric search trees (G-trees)."
+license = "MIT"
+repository = "https://github.com/carsonfarmer/geometric-tree-rs"
+keywords = ["g-tree", "zip-tree", "persistent", "immutable", "history-independent"]
+categories = ["data-structures"]
+
+[dependencies]
