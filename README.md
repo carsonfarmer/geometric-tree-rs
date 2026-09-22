@@ -156,8 +156,10 @@ one core (`cargo run --release --example bench`), per operation:
 
 | structure    | insert | get     | iterate  | remove |
 | ------------ | ------ | ------- | -------- | ------ |
-| `GMap`, k=8  | ~6 µs  | ~0.2 µs | ~0.02 µs | ~5 µs  |
-| `GMap`, k=2  | ~6 µs  | ~0.5 µs | ~0.05 µs | ~5 µs  |
+| `GMap`, k=8  | ~5.5 µs | ~0.2 µs | ~0.01 µs | ~5 µs  |
+| `GMap`, k=2  | ~6 µs   | ~0.6 µs | ~0.07 µs | ~6 µs  |
+
+Taken on a shared machine that varies by about 20% between runs; treat them as orders of magnitude.
 
 Updates allocate a new node for every node on the path, plus a copy of each node's entries; that
 is the price of persistence. Building insertion from `unzip` and `zip` costs roughly two extra
